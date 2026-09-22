@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lukman Muzacky Ardyansah | Portfolio</title>
+  <meta name="description" content="Portfolio pribadi Lukman Muzacky Ardyansah - Junior Web Developer | SMKN 1 Jenangan">
+  <meta name="author" content="Lukman Muzacky Ardyansah">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+  .bg-navbar{
+    background-color: rgb(0, 171, 239);
+  }
+</style>
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="80">
+
+  <!-- ========== NAVBAR ========== -->
+  <nav id="navbar" class="navbar bg-navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#home">
+        <span class="brand-accent">Lukman</span> Muzacky
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="#home">Beranda</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="#professional">Profil</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Keahlian</a></li>
+          <li class="nav-item"><a class="nav-link" href="#education">Pendidikan</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Pengalaman</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Proyek</a></li>
+          <li class="nav-item"><a class="nav-link" href="#certificates">Sertifikat</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Kontak</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section id="home" class="hero-section d-flex align-items-center">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative">
+      <div class="row justify-content-center min-vh-100 align-items-center py-5">
+        <div class="col-lg-8 text-center">
+          <p class="hero-greeting mb-2">Halo, saya</p>
+          <h1 class="hero-name display-4 fw-bold mb-3">Lukman Muzacky<br>Ardyansah</h1>
+          <p class="hero-role mb-4">
+            Junior Web Developer
+          </p>
+          <p class="hero-desc mb-4 mx-auto">
+            Siswa kelas XI RPL di SMKN 1 Jenangan yang passionate di bidang pengembangan website dan pemrograman.
+          </p>
+          <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <a href="#contact" class="btn btn-accent btn-lg px-4">
+              <i class="bi bi-envelope me-2"></i>Hubungi Saya
+            </a>
+            <a href="#projects" class="btn btn-outline-light btn-lg px-4">
+              <i class="bi bi-folder2-open me-2"></i>Lihat Proyek
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about" class="section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Tentang Saya</h2>
+        <div class="title-underline"></div>
+      </div>
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <div class="about-img-card">
+            <img src="img/profile.jpg" alt="Tentang Lukman" class="img-fluid rounded-4" onerror="this.src='https://ui-avatars.com/api/?name=Lukman+Muzacky&size=400&background=1e3a8a&color=fff&bold=true'">
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <h3 class="mb-3">Siswa RPL yang Suka Membangun Web</h3>
+
+          <h5 class="mb-2 text-primary">Biodata Singkat</h5>
+          <p class="text-muted mb-3">
+            Nama saya <strong>Lukman Muzacky Ardyansah</strong>, siswa kelas XI RPL B di
+            <strong>SMK Negeri 1 Jenangan, Ponorogo</strong>. Saya memiliki minat kuat di bidang
+            teknologi informasi, khususnya web development dan pemrograman. Telah menyelesaikan
+            Praktik Kerja Lapangan (PKL) selama <strong>5 bulan</strong> di
+            <strong>Degeweb Digital Agency</strong>.
+          </p>
+          <p class="text-muted mb-4">
+            Saya adalah pribadi yang disiplin, mudah beradaptasi, dan senang bekerja dalam tim.
+            Saya terus belajar untuk mengembangkan keterampilan teknis maupun soft skill agar siap
+            menghadapi dunia industri.
+          </p>
+
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+              <div class="info-item">
+                <i class="bi bi-person-fill text-dark"></i>
+                <div>
+                  <small class="text-muted">Nama</small>
+                  <p class="mb-0 fw-semibold">Lukman Muzacky Ardyansah</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="info-item">
+                <i class="bi bi-geo-alt-fill text-dark"></i>
+                <div>
+                  <small class="text-muted">Lokasi</small>
+                  <p class="mb-0 fw-semibold">Ponorogo, Jawa Timur</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="info-item">
+                <i class="bi bi-mortarboard-fill text-dark"></i>
+                <div>
+                  <small class="text-muted">Sekolah</small>
+                  <p class="mb-0 fw-semibold">SMKN 1 Jenangan</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="info-item">
+                <i class="bi bi-envelope-fill text-dark"></i>
+                <div>
+                  <small class="text-muted">Email</small>
+                  <p class="mb-0 fw-semibold">lukmanmuzackya@gmail.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visi & Misi -->
+      <div class="row g-4 mt-2">
+        <div class="col-md-6">
+          <div class="visi-misi-card h-100">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="visi-misi-icon">
+                <i class="bi bi-eye-fill"></i>
+              </div>
+              <h5 class="mb-0">Visi</h5>
+            </div>
+            <p class="text-muted mb-0">
+              Menjadi pengembang perangkat lunak yang kompeten, kreatif, dan berintegritas,
+              serta mampu memberikan solusi digital yang bermanfaat bagi masyarakat dan dunia industri.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="visi-misi-card h-100">
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <div class="visi-misi-icon">
+                <i class="bi bi-flag-fill"></i>
+              </div>
+              <h5 class="mb-0">Misi</h5>
+            </div>
+            <ul class="text-muted mb-0 misi-list">
+              <li>Terus belajar dan mengembangkan skill web development serta teknologi terbaru.</li>
+              <li>Menerapkan ilmu yang didapat melalui proyek nyata dan praktik industri.</li>
+              <li>Bekerja sama secara profesional, disiplin, dan bertanggung jawab dalam setiap tugas.</li>
+              <li>Menggunakan teknologi (termasuk AI) untuk mendukung proses belajar dan inovasi.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SKILLS ========== -->
+
+  <!-- ========== PROFIL PROFESIONAL ========== -->
+  <section id="professional" class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Profil Profesional</h2>
+        <div class="title-underline"></div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="professional-card text-center">
+            <div class="professional-icon mx-auto mb-3">
+              <i class="bi bi-briefcase-fill"></i>
+            </div>
+            <h4 class="mb-2">Siswa / Software Engineering Student</h4>
+            <p class="text-primary fw-semibold mb-3">SMK Negeri 1 Jenangan Ponorogo</p>
+            <p class="text-muted mb-0 mx-auto professional-desc">
+              Fokus pada bidang Web Development dan Rekayasa Perangkat Lunak,
+              dengan minat pada penerapan AI dalam proses belajar dan pengembangan aplikasi.
+            </p>
+            <div class="d-flex flex-wrap gap-2 justify-content-center mt-4">
+              <span class="badge bg-dark">Web Development</span>
+              <span class="badge bg-dark">Software Engineering</span>
+              <span class="badge bg-dark">AI Interest</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Keahlian</h2>
+        <div class="title-underline"></div>
+        <p class="text-muted mt-3">Teknologi dan soft skill yang saya kuasai</p>
+      </div>
+      <div class="row g-4">
+        <!-- Technical Skills -->
+        <div class="col-lg-6">
+          <div class="skill-card h-100">
+            <h4 class="mb-4"><i class="bi bi-code-slash me-2 text-dark"></i>Technical Skills</h4>
+            <div class="skill-item mb-4">
+              <div class="d-flex justify-content-between mb-1">
+                <span>HTML & CSS</span>
+                <span class="text-muted">50%</span>
+              </div>
+              <div class="progress" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="skill-item mb-4">
+              <div class="d-flex justify-content-between mb-1">
+                <span>JavaScript</span>
+                <span class="text-muted">50%</span>
+              </div>
+              <div class="progress" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="skill-item mb-4">
+              <div class="d-flex justify-content-between mb-1">
+                <span>PHP & MySQL</span>
+                <span class="text-muted">50%</span>
+              </div>
+              <div class="progress" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="skill-item mb-4">
+              <div class="d-flex justify-content-between mb-1">
+                <span>Bootstrap</span>
+                <span class="text-muted">50%</span>
+              </div>
+              <div class="progress" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="d-flex justify-content-between mb-1">
+                <span>Microsoft Office</span>
+                <span class="text-muted">50%</span>
+              </div>
+              <div class="progress" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" style="width: 50%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Soft Skills & Focus -->
+        <div class="col-lg-6">
+          <div class="skill-card h-100">
+            <h4 class="mb-4"><i class="bi bi-people-fill me-2 text-dark"></i>Soft Skills & Minat</h4>
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="soft-skill-box text-center p-3">
+                  <i class="bi bi-people display-6 text-dark mb-2"></i>
+                  <p class="mb-0 small fw-semibold">Kerja Sama Tim</p>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="soft-skill-box text-center p-3">
+                  <i class="bi bi-chat-dots display-6 text-dark mb-2"></i>
+                  <p class="mb-0 small fw-semibold">Komunikasi</p>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="soft-skill-box text-center p-3">
+                  <i class="bi bi-clock-history display-6 text-dark mb-2"></i>
+                  <p class="mb-0 small fw-semibold">Manajemen Waktu</p>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="soft-skill-box text-center p-3">
+                  <i class="bi bi-check2-circle display-6 text-dark mb-2"></i>
+                  <p class="mb-0 small fw-semibold">Disiplin</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 p-3 bg-light rounded-3">
+              <p class="mb-1 fw-semibold text-dark"><i class="bi bi-star-fill me-1"></i> Fokus Utama</p>
+              <p class="mb-0 small text-muted">Front-end Web Development — membangun antarmuka pengguna yang interaktif dan menarik.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EDUCATION ========== -->
+  <section id="education" class="section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Pendidikan</h2>
+        <div class="title-underline"></div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-year">2024 – 2027</span>
+                <h5 class="mb-1">SMK Negeri 1 Jenangan</h5>
+                <p class="text-dark mb-2 fw-semibold">Jurusan Rekayasa Perangkat Lunak (RPL)</p>
+                <p class="text-muted mb-0">Fokus pada pengembangan perangkat lunak, web development, dan rekayasa sistem informasi.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-year">2021 – 2024</span>
+                <h5 class="mb-1">MTSN 2 Ponorogo</h5>
+                <p class="text-dark mb-2 fw-semibold">Ponorogo, Jawa Timur</p>
+                <p class="text-muted mb-0">Pendidikan menengah pertama di MTSN 2 Ponorogo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== EXPERIENCE / PENGALAMAN ========== -->
+  <section id="experience" class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Pengalaman</h2>
+        <div class="title-underline"></div>
+        <p class="text-muted mt-3">Pengalaman praktik kerja dan kegiatan yang pernah saya jalani</p>
+      </div>
+      <div class="row g-4 align-items-center justify-content-center">
+        <div class="col-lg-5">
+          <div class="experience-photo">
+            <img src="img/pkl-degeweb.jpg" alt="PKL di Degeweb Digital Agency" class="img-fluid rounded-4 shadow w-100" style="display:block;width:100%;height:auto;" loading="eager">
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="experience-card">
+            <span class="timeline-year mb-2 d-inline-block">5 Bulan</span>
+            <h4 class="mb-2">Praktik Kerja Lapangan (PKL)</h4>
+            <h5 class="text-primary mb-3">Degeweb Digital Agency</h5>
+            <p class="text-muted mb-3">
+              Melaksanakan Praktik Kerja Lapangan selama <strong>5 bulan</strong> di Degeweb Digital Agency.
+              Mempelajari dan terlibat dalam proses pengembangan website, aplikasi, serta layanan digital lainnya.
+            </p>
+            <ul class="experience-list text-muted mb-3">
+              <li>Pengembangan website dan aplikasi</li>
+              <li>Kolaborasi tim dalam proyek digital</li>
+              <li>Penerapan teknologi web di lingkungan industri</li>
+              <li>Belajar praktik kerja profesional di dunia IT</li>
+            </ul>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge bg-dark">Web Development</span>
+              <span class="badge bg-dark">Digital Agency</span>
+              <span class="badge bg-dark">Teamwork</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROJECTS ========== -->
+  <section id="projects" class="section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Proyek</h2>
+        <div class="title-underline"></div>
+        <p class="text-muted mt-3">Proyek yang pernah saya kerjakan</p>
+      </div>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6 col-lg-5">
+          <div class="project-card h-100">
+            <div class="project-img">
+              <div class="project-overlay">
+                <a href="#home" class="btn btn-sm btn-light" title="Lihat Detail"><i class="bi bi-eye"></i></a>
+              </div>
+              <div class="project-placeholder bg-light d-flex align-items-center justify-content-center">
+                <i class="bi bi-person-badge display-3 text-dark"></i>
+              </div>
+            </div>
+            <div class="project-body">
+              <h5>Portfolio Pribadi</h5>
+              <p class="text-muted small">Website portfolio statis dengan Bootstrap 5 yang menampilkan profil, keahlian, dan kontak.</p>
+              <div class="d-flex flex-wrap gap-1">
+                <span class="badge bg-dark">HTML</span>
+                <span class="badge bg-dark">CSS</span>
+                <span class="badge bg-dark">Bootstrap</span>
+                <span class="badge bg-dark">JavaScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-5">
+          <div class="project-card h-100">
+            <div class="project-img">
+              <div class="project-overlay">
+                <a href="http://localhost:5173/" target="_blank" class="btn btn-sm btn-light" title="Kunjungi"><i class="bi bi-box-arrow-up-right"></i></a>
+              </div>
+              <div class="project-placeholder bg-light d-flex align-items-center justify-content-center">
+                <i class="bi bi-shop display-3 text-dark"></i>
+              </div>
+            </div>
+            <div class="project-body">
+              <h5>Usaha Karya Tangan</h5>
+              <p class="text-muted small">Website dinamis toko produk karya tangan (batik / rajut / penjahit) dengan fitur katalog dan kontak.</p>
+              <div class="d-flex flex-wrap gap-1">
+                <span class="badge bg-dark">PHP</span>
+                <span class="badge bg-dark">MySQL</span>
+                <span class="badge bg-dark">Bootstrap</span>
+                <span class="badge bg-dark">JavaScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== SERTIFIKAT / PRESTASI ========== -->
+  <section id="certificates" class="section-padding bg-light">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Sertifikat & Prestasi</h2>
+        <div class="title-underline"></div>
+        <p class="text-muted mt-3">Sertifikasi, pelatihan, dan kompetensi yang telah dicapai</p>
+      </div>
+                              <div class="row g-4 align-items-center justify-content-center">
+        <div class="col-lg-7">
+          <div class="certificate-photo">
+            <img src="img/sertifikat-gamelab.jpg" alt="Sertifikat Kunjungan Industri - Lukman Muzacky Ardyansah" class="img-fluid rounded-3 shadow w-100">
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="certificate-card">
+            <div class="certificate-icon mb-3">
+              <i class="bi bi-award-fill"></i>
+            </div>
+            <h5 class="mb-2">Sertifikat Kunjungan Industri</h5>
+            <p class="text-primary fw-semibold mb-2">Gamelab Indonesia — Educa Studio</p>
+            <p class="text-muted small mb-0">
+              Diberikan kepada <strong>Lukman Muzacky Ardyansah</strong> atas partisipasinya mengikuti acara
+              <strong>"Kunjungan Industri SMKN 1 Jenangan"</strong> sebagai <strong>Peserta</strong>
+              yang dilaksanakan pada tanggal <strong>05 Januari 2026</strong>
+              di PT Educa Sisfomedia Indonesia.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section id="contact" class="section-padding">
+    <div class="container">
+      <div class="section-header text-center mb-5">
+        <h2 class="section-title">Hubungi Saya</h2>
+        <div class="title-underline"></div>
+        <p class="text-muted mt-3">Tertarik berkolaborasi atau ingin bertanya? Silakan hubungi saya.</p>
+      </div>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+          <div class="contact-card text-center h-100">
+            <div class="contact-icon mx-auto mb-3">
+              <i class="bi bi-envelope-fill"></i>
+            </div>
+            <h5>Email</h5>
+            <a href="mailto:lukmanmuzackya@gmail.com" class="text-decoration-none">lukmanmuzackya@gmail.com</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card text-center h-100">
+            <div class="contact-icon mx-auto mb-3">
+              <i class="bi bi-whatsapp"></i>
+            </div>
+            <h5>WhatsApp</h5>
+            <a href="https://wa.me/62895807426969" target="_blank" class="text-decoration-none">+62 895-8074-26969</a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card text-center h-100">
+            <div class="contact-icon mx-auto mb-3">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <h5>Lokasi</h5>
+            <p class="mb-0 text-muted">Ponorogo, Jawa Timur</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer py-4">
+    <div class="container">
+      <div class="text-center">
+        <p class="mb-0">&copy; 2026 <strong>Lukman Muzacky Ardyansah</strong>. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/script.js"></script>
+</body>
+</html>

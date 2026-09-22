@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 88" role="img" aria-label="Batik Nusantara">
+  <defs>
+    <linearGradient id="ibg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a2744"/>
+      <stop offset="100%" stop-color="#3d2412"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="8" width="72" height="72" rx="16" fill="url(#ibg)"/>
+  <ellipse cx="38" cy="44" rx="13" ry="18" fill="none" stroke="#d4af37" stroke-width="2"/>
+  <ellipse cx="38" cy="44" rx="18" ry="13" fill="none" stroke="#d4af37" stroke-width="1.6"/>
+  <circle cx="38" cy="44" r="4.5" fill="#d4af37"/>
+  <ellipse cx="22" cy="28" rx="5.5" ry="8" fill="none" stroke="#e8d5a3" stroke-width="1.1" opacity="0.7"/>
+  <ellipse cx="54" cy="28" rx="5.5" ry="8" fill="none" stroke="#e8d5a3" stroke-width="1.1" opacity="0.7"/>
+  <ellipse cx="22" cy="60" rx="5.5" ry="8" fill="none" stroke="#e8d5a3" stroke-width="1.1" opacity="0.7"/>
+  <ellipse cx="54" cy="60" rx="5.5" ry="8" fill="none" stroke="#e8d5a3" stroke-width="1.1" opacity="0.7"/>
+  <text x="90" y="48" font-family="Georgia, Times, serif" font-size="30" font-weight="700" fill="#1a2744">Batik Nusantara</text>
+  <text x="90" y="70" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="600" fill="#8b7355" letter-spacing="2.8">WARISAN BATIK ASLI INDONESIA</text>
+  <line x1="90" y1="54" x2="340" y2="54" stroke="#c9a84b" stroke-width="1.6"/>
+</svg>

@@ -1,0 +1,22 @@
+ERROR: No database selected
+===========================
+
+1. Buat database di phpMyAdmin / MySQL:
+   CREATE DATABASE toko_batik CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
+2. Import file: toko_batik.sql (pilih database toko_batik dulu, lalu Import)
+
+   Atau dari terminal:
+   mysql -u root -p < toko_batik.sql
+
+3. Pastikan file backend/.env berisi:
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASS=
+   DB_NAME=toko_batik
+
+   (Isi DB_PASS jika root Anda pakai password)
+
+4. Restart backend:
+   cd backend
+   npm start
