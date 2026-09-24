@@ -330,21 +330,41 @@ const createPembelian = async (req, res) => {
       return res.status(404).json({ message: "Produk tidak ditemukan" });
     }
 
-    const qty = Math.max(1, parseInt(req.body.jumlah, 10) || 1);
+    let qty = Math.max(1, parseInt(req.body.jumlah, 10) || 0);
+    if (!qty) {
+      const m = String(catatan || req.body.catatan || "").match(/Jumlah:\s*(\d+)/i);
+      qty = m ? Math.max(1, parseInt(m[1], 10) || 1) : 1;
+    }
 
     // Cek & kurangi stok (jika kolom stok ada)
     if (produk.stok != null) {
-      if (Number(produk.stok) < qty) {
+      const sisa = Number(produk.stok);
+      if (Number.isNaN(sisa)) {
+        // abaikan jika stok bukan angka
+      } else if (sisa <= 0) {
         return res.status(400).json({
-          message: `Stok tidak cukup. Sisa stok: ${produk.stok}`,
+          message: "Stok habis. Transaksi dibatalkan.",
         });
+      } else if (sisa < qty) {
+        return res.status(400).json({
+          message: `Stok kurang. Hanya tersisa ${sisa} pcs. Transaksi dibatalkan.`,
+        });
+      } else {
+        const affected = await produkModel.decreaseStok(id_produk, qty);
+        if (affected === 0) {
+          return res.status(400).json({
+            message: `Stok kurang. Hanya tersisa ${sisa} pcs. Transaksi dibatalkan.`,
+          });
+        }
       }
-      const affected = await produkModel.decreaseStok(id_produk, qty);
-      if (affected === 0 && Number(produk.stok) >= qty) {
-        // kolom mungkin belum ada — lanjut tanpa stok
-      } else if (affected === 0) {
-        return res.status(400).json({ message: "Stok tidak cukup atau gagal dikurangi" });
-      }
+    }
+
+    // Pastikan jumlah (qty) tersimpan di kolom jumlah + catatan
+    let catatanFinal = catatan || "";
+    if (!/Jumlah:\s*\d+/i.test(catatanFinal)) {
+      catatanFinal = catatanFinal
+        ? `${catatanFinal}${catatanFinal.endsWith(".") ? "" : "."} Jumlah: ${qty}`
+        : `Jumlah: ${qty}`;
     }
 
     const insertId = await pembelianModel.insertPembelian({
@@ -357,9 +377,9 @@ const createPembelian = async (req, res) => {
       pembayaran: "Belum",
       pengiriman,
       status: "Tertunda",
-      catatan: catatan || null,
+      catatan: catatanFinal,
       foto_bukti: null,
-      jumlah: jumlah || 1,
+      jumlah: qty,
     });
 
     const pembelianBaru = await pembelianModel.findPembelianById(insertId);

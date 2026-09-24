@@ -68,6 +68,7 @@ export default function PembeliKeranjangPage() {
           metode_pembayaran: form.metode_pembayaran,
           pengiriman: form.pengiriman,
           catatan,
+          jumlah: Math.max(1, Number(item.jumlah) || 1),
         });
       }
       clearCart();

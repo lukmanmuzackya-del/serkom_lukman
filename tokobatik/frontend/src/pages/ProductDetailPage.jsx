@@ -61,6 +61,18 @@ export default function ProductDetailPage() {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   }
 
+  function maxStok() {
+    if (!produk || produk.stok == null) return 999;
+    return Math.max(0, Number(produk.stok) || 0);
+  }
+
+  function clampJumlah(n) {
+    const v = Math.max(1, Number(n) || 1);
+    const max = maxStok();
+    if (max <= 0) return 1;
+    return Math.min(v, max);
+  }
+
   function handleAddCart() {
     if (!produk) return;
     if (!isLoggedIn) {
@@ -71,8 +83,23 @@ export default function ProductDetailPage() {
       setError('Hanya akun pembeli yang dapat menambah keranjang.');
       return;
     }
-    addItem(produk, jumlah);
-    setToast('Ditambahkan ke keranjang');
+    const max = maxStok();
+    if (max <= 0) {
+      setError('Stok habis. Tidak bisa ditambahkan ke keranjang.');
+      return;
+    }
+    if (Number(jumlah) > max) {
+      setError(`Stok kurang. Hanya tersisa ${max} pcs.`);
+      setJumlah(max);
+      return;
+    }
+    try {
+      addItem(produk, jumlah);
+      setError('');
+      setToast('Ditambahkan ke keranjang');
+    } catch (err) {
+      setError(err.message || 'Gagal menambah ke keranjang');
+    }
   }
 
   function handleBuyNow() {
@@ -96,6 +123,18 @@ export default function ProductDetailPage() {
     setError('');
     try {
       const qty = Math.max(1, Number(jumlah) || 1);
+      const max = maxStok();
+      if (max <= 0) {
+        setError('Stok habis. Transaksi dibatalkan.');
+        setBusy(false);
+        return;
+      }
+      if (qty > max) {
+        setError(`Stok kurang. Hanya tersisa ${max} pcs. Transaksi dibatalkan.`);
+        setJumlah(max);
+        setBusy(false);
+        return;
+      }
       const catatanBase = form.catatan?.trim() || '';
       const catatan = catatanBase ? `Jumlah: ${qty}. ${catatanBase}` : `Jumlah: ${qty}`;
       await pembeliApi.createPembelian({
@@ -159,14 +198,31 @@ export default function ProductDetailPage() {
                 <div className="d-flex align-items-center gap-3 mt-4 mb-3">
                   <label className="small fw-semibold mb-0">Jumlah</label>
                   <div className="qty-control">
-                    <button type="button" onClick={() => setJumlah((n) => Math.max(1, n - 1))}>−</button>
+                    <button type="button" onClick={() => setJumlah((n) => clampJumlah(n - 1))}>−</button>
                     <input
                       type="number"
                       min="1"
                       value={jumlah}
-                      onChange={(e) => setJumlah(Math.max(1, Number(e.target.value) || 1))}
+                      onChange={(e) => {
+                      const max = maxStok();
+                      const v = Math.max(1, Number(e.target.value) || 1);
+                      if (max > 0 && v > max) {
+                        setError(`Stok kurang. Hanya tersisa ${max} pcs.`);
+                        setJumlah(max);
+                      } else {
+                        setError('');
+                        setJumlah(v);
+                      }
+                    }}
                     />
-                    <button type="button" onClick={() => setJumlah((n) => n + 1)}>+</button>
+                    <button type="button" onClick={() => {
+                      const max = maxStok();
+                      if (max > 0 && jumlah >= max) {
+                        setError(`Stok kurang. Hanya tersisa ${max} pcs.`);
+                        return;
+                      }
+                      setJumlah((n) => clampJumlah(n + 1));
+                    }}>+</button>
                   </div>
                 </div>
 

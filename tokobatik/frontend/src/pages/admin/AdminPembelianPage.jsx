@@ -16,6 +16,19 @@ import DetailDl from '../../components/admin/DetailDl';
 import { formatRupiah, formatTanggal } from '../../utils';
 import { mediaUrl } from '../../utils';
 
+function qtyOf(row) {
+  if (row?.jumlah != null && row.jumlah !== '') {
+    const n = Number(row.jumlah);
+    if (!Number.isNaN(n) && n > 0) return n;
+  }
+  const m = String(row?.catatan || '').match(/Jumlah:\s*(\d+)/i);
+  return m ? Math.max(1, Number(m[1]) || 1) : 1;
+}
+
+function totalOf(row) {
+  return (Number(row?.harga || row?.produk_harga || 0) || 0) * qtyOf(row);
+}
+
 export default function AdminPembelianPage() {
   const { handleError } = useAdminGuard();
   const { rows, loading, error, reload } = useAdminList(adminApi.getPembelian);
@@ -92,6 +105,7 @@ export default function AdminPembelianPage() {
                 <th>Pembeli</th>
                 <th>Gambar</th>
                 <th>Produk</th>
+                <th>Qty</th>
                 <th>Total</th>
                 <th>Status</th>
                 <th>Bayar</th>
@@ -101,7 +115,7 @@ export default function AdminPembelianPage() {
             <tbody>
               {rows.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="text-secondary">
+                  <td colSpan={9} className="text-secondary">
                     Belum ada pesanan.
                   </td>
                 </tr>
@@ -122,8 +136,12 @@ export default function AdminPembelianPage() {
                       className="admin-thumb"
                     />
                   </td>
-                  <td>{row.nama_produk}</td>
-                  <td>{formatRupiah(row.harga)}</td>
+                  <td>
+                    <div>{row.nama_produk}</div>
+                    <small className="text-secondary">{formatRupiah(row.harga)} / pcs</small>
+                  </td>
+                  <td className="fw-semibold">{qtyOf(row)}</td>
+                  <td>{formatRupiah(totalOf(row))}</td>
                   <td>
                     <span className="admin-badge">{row.status}</span>
                   </td>
@@ -171,7 +189,9 @@ export default function AdminPembelianPage() {
                 ['Pembeli', detail.nama_pembeli],
                 ['Email', detail.email_pembeli],
                 ['Produk', detail.nama_produk],
-                ['Harga', formatRupiah(detail.harga)],
+                ['Harga satuan', formatRupiah(detail.harga)],
+                ['Jumlah (Qty)', qtyOf(detail)],
+                ['Total', formatRupiah(totalOf(detail))],
                 ['Alamat kirim', detail.alamat_pembeli],
                 ['Telepon', detail.phone_pembeli],
                 ['Metode bayar', detail.metode_pembayaran],

@@ -64,12 +64,32 @@ export function CartProvider({ children }) {
 
   function addItem(produk, qty = 1) {
     const id = produk.id_produk ?? produk.id;
-    const jumlah = Math.max(1, Number(qty) || 1);
+    let jumlah = Math.max(1, Number(qty) || 1);
+    const stok =
+      produk.stok != null && produk.stok !== '' ? Number(produk.stok) : null;
+    if (stok != null && !Number.isNaN(stok)) {
+      if (stok <= 0) {
+        throw new Error('Stok habis. Tidak bisa ditambahkan ke keranjang.');
+      }
+      if (jumlah > stok) {
+        throw new Error(`Stok kurang. Hanya tersisa ${stok} pcs.`);
+      }
+    }
     setItems((prev) => {
       const idx = prev.findIndex((x) => String(x.id_produk) === String(id));
       if (idx >= 0) {
         const next = [...prev];
-        next[idx] = { ...next[idx], jumlah: next[idx].jumlah + jumlah };
+        let baru = next[idx].jumlah + jumlah;
+        if (stok != null && baru > stok) {
+          throw new Error(
+            `Stok kurang. Hanya tersisa ${stok} pcs (sudah ada ${next[idx].jumlah} di keranjang).`
+          );
+        }
+        next[idx] = {
+          ...next[idx],
+          jumlah: baru,
+          stok: stok != null ? stok : next[idx].stok,
+        };
         return next;
       }
       return [
@@ -80,6 +100,7 @@ export function CartProvider({ children }) {
           harga: Number(produk.harga) || 0,
           gambar: produk.gambar || '',
           kategori: produk.kategori || '',
+          stok: stok,
           jumlah,
         },
       ];
@@ -87,11 +108,15 @@ export function CartProvider({ children }) {
   }
 
   function setQty(id_produk, qty) {
-    const jumlah = Math.max(1, Number(qty) || 1);
+    let jumlah = Math.max(1, Number(qty) || 1);
     setItems((prev) =>
-      prev.map((x) =>
-        String(x.id_produk) === String(id_produk) ? { ...x, jumlah } : x
-      )
+      prev.map((x) => {
+        if (String(x.id_produk) !== String(id_produk)) return x;
+        if (x.stok != null && jumlah > Number(x.stok)) {
+          jumlah = Number(x.stok);
+        }
+        return { ...x, jumlah: Math.max(1, jumlah) };
+      })
     );
   }
 
