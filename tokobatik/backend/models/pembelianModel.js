@@ -8,7 +8,8 @@ const findAllPembelianWithDetail = () => {
   return new Promise((resolve, reject) => {
     db.query(
       `SELECT p.*, u.nama_d AS pembeli_nama_d, u.nama_b AS pembeli_nama_b, u.uname AS pembeli_uname,
-              pr.nama_produk, pr.harga, pr.gambar AS produk_gambar, pr.gambar AS gambar_produk
+              pr.nama_produk, pr.harga, pr.kategori AS kategori_produk, pr.kategori,
+              pr.gambar AS produk_gambar, pr.gambar AS gambar_produk
        FROM pembelian p
        JOIN users u ON p.id_pembeli = u.id
        JOIN produk pr ON p.id_produk = pr.id_produk

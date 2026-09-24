@@ -2594,21 +2594,11 @@ a:hover { color: var(--brand-mid); }
 /* Laporan — cetak */
 .print-only { display: none; }
 @media print {
-  .no-print,
-  .admin-sidebar,
-  .admin-topbar,
-  aside {
-    display: none !important;
-  }
+  .no-print, .admin-sidebar, .admin-topbar, aside { display: none !important; }
   .print-only { display: block !important; }
-  .admin-shell,
-  .admin-main,
-  .laporan-page {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    background: #fff !important;
-    box-shadow: none !important;
+  .admin-shell, .admin-main, .laporan-page {
+    margin: 0 !important; padding: 0 !important; width: 100% !important;
+    background: #fff !important; box-shadow: none !important;
   }
   .metric-card { border: 1px solid #ccc !important; }
   .admin-panel { box-shadow: none !important; border: 1px solid #ddd !important; }

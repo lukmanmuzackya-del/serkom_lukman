@@ -723,7 +723,7 @@ const deleteKategori = async (req, res) => {
 
 const getLaporanPenjualan = async (req, res) => {
   try {
-    const { dari, sampai, status } = req.query;
+    const { dari, sampai, status, kategori } = req.query;
     let pembelian = [];
     try {
       pembelian = await pembelianModel.findAllPembelianWithDetail();
@@ -742,6 +742,10 @@ const getLaporanPenjualan = async (req, res) => {
       if (from && t < from) return false;
       if (to && t > to) return false;
       if (status && String(p.status).toLowerCase() !== String(status).toLowerCase()) return false;
+      if (kategori) {
+        const kat = String(p.kategori || p.kategori_produk || "").toLowerCase();
+        if (kat !== String(kategori).toLowerCase()) return false;
+      }
       return true;
     });
 
@@ -764,13 +768,32 @@ const getLaporanPenjualan = async (req, res) => {
       return sum + harga * qty;
     }, 0);
 
+    // Rekap per kategori produk
+    const rekapMap = {};
+    for (const p of rows) {
+      const kat = p.kategori || p.kategori_produk || "Lainnya";
+      if (!rekapMap[kat]) rekapMap[kat] = { kategori: kat, jumlah: 0, total: 0 };
+      let qty = 1;
+      if (p.jumlah != null) qty = Number(p.jumlah) || 1;
+      else {
+        const m = String(p.catatan || "").match(/Jumlah:\s*(\d+)/i);
+        if (m) qty = Number(m[1]);
+      }
+      const harga = Number(p.harga || p.produk_harga || 0);
+      rekapMap[kat].jumlah += 1;
+      rekapMap[kat].total += harga * qty;
+    }
+    const rekap_kategori = Object.values(rekapMap);
+
     return res.status(200).json({
       ringkasan: {
         total_transaksi,
         total_pendapatan,
         dari: dari || null,
         sampai: sampai || null,
+        kategori: kategori || null,
       },
+      rekap_kategori,
       laporan: rows,
     });
   } catch (error) {
