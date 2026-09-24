@@ -2591,26 +2591,117 @@ a:hover { color: var(--brand-mid); }
 }
 
 
-/* Tabel laporan: tinggi ~5 baris, scroll horizontal */
-.laporan-table-scroll {
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 280px; /* ~5 baris + header */
-  border: 1px solid var(--border, #ebe4d8);
-  border-radius: 10px;
-  -webkit-overflow-scrolling: touch;
+/* Laporan — cetak */
+.print-only { display: none; }
+@media print {
+  .no-print,
+  .admin-sidebar,
+  .admin-topbar,
+  aside,
+  .btn,
+  nav {
+    display: none !important;
+  }
+  .print-only { display: block !important; }
+  .admin-shell,
+  .admin-main,
+  .laporan-page {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  .metric-card {
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+  .admin-panel {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  table { font-size: 11px; }
 }
-.laporan-table {
-  min-width: 920px;
+
+
+.laporan-page .admin-panel .table-responsive,
+.admin-panel .table-responsive.admin-table-no-scroll {
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+
+
+/* =============================================
+   Laporan Penjualan — tanpa scroll vertikal
+   ============================================= */
+.laporan-page .admin-panel .table-responsive,
+.laporan-page .table-responsive,
+.laporan-page .laporan-table-scroll,
+.admin-panel .table-responsive.admin-table-no-scroll {
+  max-height: none !important;
+  height: auto !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+}
+
+.laporan-page .admin-panel {
+  overflow: visible !important;
+}
+
+.laporan-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border, #ebe4d8);
+}
+
+.laporan-page .metric-card {
+  padding: 1rem 1.15rem;
+}
+
+.laporan-page table.table {
   margin-bottom: 0;
 }
-.laporan-table thead th {
-  position: sticky;
-  top: 0;
-  background: #faf7f2;
-  z-index: 1;
+
+.laporan-page table.table th,
+.laporan-page table.table td {
+  vertical-align: middle;
   white-space: nowrap;
 }
-.laporan-table tbody tr {
-  height: 48px;
+
+.laporan-page .btn-struk {
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.print-only { display: none; }
+
+@media print {
+  .no-print,
+  .admin-sidebar,
+  .admin-topbar,
+  aside {
+    display: none !important;
+  }
+  .print-only { display: block !important; }
+  .laporan-page,
+  .admin-main,
+  .admin-shell {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+  .metric-card { border: 1px solid #ccc !important; }
+  .admin-panel { box-shadow: none !important; border: 1px solid #ddd !important; }
+  table { font-size: 11px; }
 }
