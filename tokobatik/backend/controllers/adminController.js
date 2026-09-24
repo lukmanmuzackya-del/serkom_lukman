@@ -741,7 +741,10 @@ const getLaporanPenjualan = async (req, res) => {
       const t = new Date(p.created_at || p.tanggal || 0);
       if (from && t < from) return false;
       if (to && t > to) return false;
-      if (status && String(p.status).toLowerCase() !== String(status).toLowerCase()) return false;
+      // Pesanan dibatalkan tidak masuk laporan (kecuali filter status = Dibatalkan)
+      const st = String(p.status || "").toLowerCase();
+      if (!status && (st === "dibatalkan" || st === "batal")) return false;
+      if (status && st !== String(status).toLowerCase()) return false;
       if (kategori) {
         const kat = String(p.kategori || p.kategori_produk || "").toLowerCase();
         if (kat !== String(kategori).toLowerCase()) return false;

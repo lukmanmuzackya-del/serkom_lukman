@@ -177,7 +177,11 @@ export default function AdminLaporanPage() {
         sampai: ring.sampai || sampai || null,
         kategori: ring.kategori || kategori || null,
       });
-      setRows(laporan);
+      // Cadangan: sembunyikan dibatalkan di frontend (backend juga filter)
+      const filtered = status === 'Dibatalkan'
+        ? laporan
+        : laporan.filter((r) => String(r.status || '').toLowerCase() !== 'dibatalkan');
+      setRows(filtered);
       setRekap(rekap_kategori || []);
       setPage(1);
     } catch (e) {
@@ -391,32 +395,22 @@ export default function AdminLaporanPage() {
               <div className="laporan-pager no-print">
                 <button
                   type="button"
-                  className="btn btn-sm btn-outline-secondary"
+                  className="btn btn-sm btn-outline-secondary rounded-pill px-3"
                   disabled={page <= 1}
-                  onClick={() => setPage((p) => p - 1)}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
                 >
                   ← Sebelumnya
                 </button>
-                <div className="d-flex gap-1 flex-wrap justify-content-center">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-                    <button
-                      key={n}
-                      type="button"
-                      className={`btn btn-sm ${n === page ? 'btn-brand' : 'btn-outline-secondary'}`}
-                      onClick={() => setPage(n)}
-                      style={{ minWidth: 36 }}
-                    >
-                      {n}
-                    </button>
-                  ))}
-                </div>
+                <span className="small text-muted fw-semibold">
+                  {page} / {totalPages}
+                </span>
                 <button
                   type="button"
-                  className="btn btn-sm btn-outline-secondary"
+                  className="btn btn-sm btn-outline-secondary rounded-pill px-3"
                   disabled={page >= totalPages}
-                  onClick={() => setPage((p) => p + 1)}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 >
-                  Berikutnya →
+                  Selanjutnya →
                 </button>
               </div>
             )}
