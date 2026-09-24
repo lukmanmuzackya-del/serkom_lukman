@@ -356,13 +356,14 @@ export default function AdminLaporanPage() {
             </div>
           )}
 
-          {/* Daftar transaksi */}
+          {/* Daftar transaksi — max ~5 baris terlihat, geser horizontal */}
           <div className="admin-panel">
             <h3 className="h6 fw-bold mb-2">Daftar transaksi</h3>
-            <div className="table-responsive">
-              <table className="table table-sm table-hover mb-0 align-middle">
+            <div className="laporan-table-scroll">
+              <table className="table table-sm table-hover mb-0 align-middle laporan-table">
                 <thead>
                   <tr>
+                    <th className="text-center" style={{ width: 48 }}>No</th>
                     <th>Tanggal</th>
                     <th>Pembeli</th>
                     <th>Produk</th>
@@ -375,15 +376,16 @@ export default function AdminLaporanPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((r) => (
+                  {rows.map((r, idx) => (
                     <tr key={r.id}>
-                      <td className="small">{formatTanggal(r.created_at)}</td>
-                      <td>{namaPembeliOf(r)}</td>
-                      <td>{r.nama_produk || '—'}</td>
-                      <td className="small">{r.kategori || r.kategori_produk || '—'}</td>
+                      <td className="text-center text-muted small">{idx + 1}</td>
+                      <td className="small text-nowrap">{formatTanggal(r.created_at)}</td>
+                      <td className="text-nowrap">{namaPembeliOf(r)}</td>
+                      <td className="text-nowrap">{r.nama_produk || '—'}</td>
+                      <td className="small text-nowrap">{r.kategori || r.kategori_produk || '—'}</td>
                       <td>{qtyOf(r)}</td>
-                      <td>{formatRupiah(totalOf(r))}</td>
-                      <td>{r.pembayaran || '—'}</td>
+                      <td className="text-nowrap">{formatRupiah(totalOf(r))}</td>
+                      <td className="text-nowrap">{r.pembayaran || '—'}</td>
                       <td><span className="badge bg-secondary">{r.status}</span></td>
                       <td className="no-print">
                         <button type="button" className="btn btn-sm btn-outline-brand" title="Cetak struk" onClick={() => cetakStruk(r)}>
@@ -394,7 +396,7 @@ export default function AdminLaporanPage() {
                   ))}
                   {!rows.length && (
                     <tr>
-                      <td colSpan={9} className="text-center text-muted py-4">
+                      <td colSpan={10} className="text-center text-muted py-4">
                         Tidak ada data pada filter ini.
                       </td>
                     </tr>
@@ -402,6 +404,12 @@ export default function AdminLaporanPage() {
                 </tbody>
               </table>
             </div>
+            {rows.length > 5 && (
+              <p className="small text-muted mt-2 mb-0 no-print">
+                <i className="bi bi-arrow-left-right me-1" />
+                Geser ke kanan untuk melihat kolom lainnya · {rows.length} transaksi
+              </p>
+            )}
           </div>
         </>
       )}

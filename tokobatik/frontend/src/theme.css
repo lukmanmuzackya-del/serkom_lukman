@@ -2591,16 +2591,26 @@ a:hover { color: var(--brand-mid); }
 }
 
 
-/* Laporan — cetak */
-.print-only { display: none; }
-@media print {
-  .no-print, .admin-sidebar, .admin-topbar, aside { display: none !important; }
-  .print-only { display: block !important; }
-  .admin-shell, .admin-main, .laporan-page {
-    margin: 0 !important; padding: 0 !important; width: 100% !important;
-    background: #fff !important; box-shadow: none !important;
-  }
-  .metric-card { border: 1px solid #ccc !important; }
-  .admin-panel { box-shadow: none !important; border: 1px solid #ddd !important; }
-  table { font-size: 11px; }
+/* Tabel laporan: tinggi ~5 baris, scroll horizontal */
+.laporan-table-scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 280px; /* ~5 baris + header */
+  border: 1px solid var(--border, #ebe4d8);
+  border-radius: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+.laporan-table {
+  min-width: 920px;
+  margin-bottom: 0;
+}
+.laporan-table thead th {
+  position: sticky;
+  top: 0;
+  background: #faf7f2;
+  z-index: 1;
+  white-space: nowrap;
+}
+.laporan-table tbody tr {
+  height: 48px;
 }
