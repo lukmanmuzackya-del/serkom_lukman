@@ -8,7 +8,7 @@ import { formatRupiah,
   formatTanggal,
   labelStatusBayar,
   labelMetodeBayar,
-  labelPengiriman,, printStruk } from '../../utils';
+  labelPengiriman, printStruk } from '../../utils';
 import SafeImg from '../../components/SafeImg';
 import OrderStatusTracker, {
   OrderStatusSummary,
