@@ -2765,3 +2765,21 @@ a:hover { color: var(--brand-mid); }
   margin-bottom: 0.85rem;
   color: #1a2744;
 }
+
+
+/* Cetak laporan penjualan — header periode */
+.print-only { display: none !important; }
+@media print {
+  .print-only,
+  .print-laporan-header {
+    display: block !important;
+  }
+  .print-laporan-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

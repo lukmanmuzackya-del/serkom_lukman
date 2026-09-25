@@ -119,6 +119,8 @@ function simpanCSV(rows, ringkasan) {
     );
   });
   lines.push('');
+  const per = formatPeriodeText(ringkasan.dari, ringkasan.sampai, rows);
+  lines.push(`Periode,${per}`);
   lines.push(`Total transaksi,${ringkasan.total_transaksi || rows.length}`);
   lines.push(`Total pendapatan,${ringkasan.total_pendapatan || 0}`);
   const blob = new Blob(['\ufeff' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
@@ -126,6 +128,38 @@ function simpanCSV(rows, ringkasan) {
   a.href = URL.createObjectURL(blob);
   a.download = `laporan-${new Date().toISOString().slice(0, 10)}.csv`;
   a.click();
+}
+
+
+function formatPeriodeText(dari, sampai, rows) {
+  const fmt = (d) => {
+    if (!d) return null;
+    try {
+      return formatTanggal(d);
+    } catch {
+      return String(d);
+    }
+  };
+  const a = fmt(dari);
+  const b = fmt(sampai);
+  if (a && b) return `${a} s/d ${b}`;
+  if (a && !b) return `Mulai ${a}`;
+  if (!a && b) return `Sampai ${b}`;
+  // fallback: dari data transaksi
+  if (Array.isArray(rows) && rows.length) {
+    const dates = rows
+      .map((r) => r.created_at)
+      .filter(Boolean)
+      .map((d) => new Date(d).getTime())
+      .filter((n) => !Number.isNaN(n))
+      .sort((x, y) => x - y);
+    if (dates.length) {
+      const min = fmt(new Date(dates[0]).toISOString());
+      const max = fmt(new Date(dates[dates.length - 1]).toISOString());
+      if (min && max) return `${min} s/d ${max}`;
+    }
+  }
+  return 'Semua periode';
 }
 
 export default function AdminLaporanPage() {
@@ -146,6 +180,11 @@ export default function AdminLaporanPage() {
   const pageRows = useMemo(
     () => rows.slice((page - 1) * PER_PAGE, page * PER_PAGE),
     [rows, page]
+  );
+
+  const periodeLabel = useMemo(
+    () => formatPeriodeText(dari || ringkasan.dari, sampai || ringkasan.sampai, rows),
+    [dari, sampai, ringkasan.dari, ringkasan.sampai, rows]
   );
 
   const chartByKategori = useMemo(() => {
@@ -311,6 +350,40 @@ export default function AdminLaporanPage() {
         <LoadingBlock text="Memuat laporan…" />
       ) : (
         <>
+
+          {/* Header khusus cetak — tampilkan periode */}
+          <div className="print-only print-laporan-header mb-3">
+            <div className="text-center mb-2">
+              <div className="fw-bold" style={{ fontSize: '16px' }}>
+                {SITE.nama_toko || 'Batik Nusantara'}
+              </div>
+              <div className="small text-muted">{SITE.tagline || ''}</div>
+              <div className="small text-muted">
+                {SITE.alamat_toko || ''}
+                {SITE.tlp_toko ? ` · ${SITE.tlp_toko}` : ''}
+              </div>
+            </div>
+            <h2 className="h5 fw-bold text-center mb-2">LAPORAN PENJUALAN</h2>
+            <div className="text-center small mb-3">
+              <strong>Periode:</strong> {periodeLabel}
+              {kategori ? (
+                <>
+                  {' '}
+                  · <strong>Kategori:</strong> {kategori}
+                </>
+              ) : null}
+              {status ? (
+                <>
+                  {' '}
+                  · <strong>Status:</strong> {status}
+                </>
+              ) : null}
+            </div>
+            <div className="small text-muted text-center mb-3">
+              Dicetak: {formatTanggal(new Date().toISOString())}
+            </div>
+          </div>
+
           {/* REKAP TOTAL */}
           <div className="row g-2 mb-3">
             <div className="col-sm-6">
