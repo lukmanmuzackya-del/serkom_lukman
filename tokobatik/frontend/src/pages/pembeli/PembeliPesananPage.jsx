@@ -1,15 +1,14 @@
+import { SITE } from '../../constants';
 // pages/pembeli/PembeliPesananPage.jsx — bayar + visual status pesanan
 import { useMemo, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { pembeliApi } from '../../api';
 import { usePembeliList } from '../../hooks';
-import {
-  formatRupiah,
+import { formatRupiah,
   formatTanggal,
   labelStatusBayar,
   labelMetodeBayar,
-  labelPengiriman,
-} from '../../utils';
+  labelPengiriman,, printStruk } from '../../utils';
 import SafeImg from '../../components/SafeImg';
 import OrderStatusTracker, {
   OrderStatusSummary,
@@ -193,6 +192,13 @@ export default function PembeliPesananPage() {
                       </div>
                       <div className="col-sm-6">
                         <b>Total:</b> {formatRupiah(total)}
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-brand ms-2"
+                          onClick={() => printStruk(p, SITE)}
+                        >
+                          <i className="bi bi-printer" /> Struk
+                        </button>
                       </div>
                       <div className="col-sm-6">
                         <b>Status Pembayaran:</b> {labelStatusBayar(p.pembayaran)}

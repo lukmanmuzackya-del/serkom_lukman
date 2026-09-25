@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { BarChart, DonutChart } from '../../components/SimpleCharts';
 import { adminApi } from '../../api';
 import { useAdminGuard } from '../../hooks';
 import LoadingBlock from '../../components/admin/LoadingBlock';
@@ -146,6 +147,35 @@ export default function AdminLaporanPage() {
     () => rows.slice((page - 1) * PER_PAGE, page * PER_PAGE),
     [rows, page]
   );
+
+  const chartByKategori = useMemo(() => {
+    if (rekap?.length) {
+      return rekap.map((k) => ({
+        label: k.kategori,
+        value: Number(k.total) || 0,
+        jumlah: k.jumlah,
+      }));
+    }
+    const map = {};
+    rows.forEach((r) => {
+      const kat = r.kategori || r.kategori_produk || 'Lainnya';
+      if (!map[kat]) map[kat] = 0;
+      const harga = Number(r.harga || r.produk_harga || 0);
+      let qty = 1;
+      if (r.jumlah != null) qty = Number(r.jumlah) || 1;
+      map[kat] += harga * qty;
+    });
+    return Object.entries(map).map(([label, value]) => ({ label, value }));
+  }, [rekap, rows]);
+
+  const chartByStatus = useMemo(() => {
+    const map = {};
+    rows.forEach((r) => {
+      const st = r.status || 'Lainnya';
+      map[st] = (map[st] || 0) + 1;
+    });
+    return Object.entries(map).map(([label, value]) => ({ label, value }));
+  }, [rows]);
 
   useEffect(() => {
     adminApi
@@ -295,6 +325,33 @@ export default function AdminLaporanPage() {
                 <div className="metric-card__value">
                   {formatRupiah(ringkasan.total_pendapatan || 0)}
                 </div>
+              </div>
+            </div>
+          </div>
+
+          
+          {/* GRAFIK */}
+          <div className="row g-3 mb-3 no-print">
+            <div className="col-lg-7">
+              <div className="chart-card">
+                <div className="chart-card__title">Grafik penjualan per kategori</div>
+                <BarChart
+                  data={chartByKategori}
+                  labelKey="label"
+                  valueKey="value"
+                  formatValue={(v) => formatRupiah(v)}
+                  height={200}
+                />
+              </div>
+            </div>
+            <div className="col-lg-5">
+              <div className="chart-card">
+                <div className="chart-card__title">Komposisi status pesanan</div>
+                <DonutChart
+                  data={chartByStatus}
+                  labelKey="label"
+                  valueKey="value"
+                />
               </div>
             </div>
           </div>

@@ -2,7 +2,8 @@
  * Dashboard admin.
  * Coba GET /api/admin/stats dulu; jika gagal / kosong, hitung dari list produk/pembeli/artikel/pembelian.
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { BarChart, DonutChart } from '../../components/SimpleCharts';
 import { Link } from 'react-router-dom';
 import { adminApi } from '../../api';
 import { useAdminGuard } from '../../hooks';
@@ -179,6 +180,36 @@ export default function AdminOverviewPage() {
   if (error) return <div className="alert alert-danger">{error}</div>;
   if (!data) return null;
 
+  const transaksiList = Array.isArray(data.transaksi_terbaru) ? data.transaksi_terbaru : [];
+
+  const chartStatus = (() => {
+    const map = {};
+    transaksiList.forEach((r) => {
+      const st = r.status || 'Lainnya';
+      map[st] = (map[st] || 0) + 1;
+    });
+    // fallback from summary numbers if no list
+    if (!Object.keys(map).length) {
+      const pairs = [
+        ['Pembeli', num(data.jumlah_pembeli, data.total_pembeli)],
+        ['Produk', num(data.jumlah_produk, data.total_produk)],
+        ['Transaksi', num(data.jumlah_transaksi, data.total_transaksi)],
+        ['Artikel', num(data.jumlah_artikel, data.total_artikel)],
+      ];
+      return pairs.filter(([, v]) => v > 0).map(([label, value]) => ({ label, value }));
+    }
+    return Object.entries(map).map(([label, value]) => ({ label, value }));
+  })();
+
+  const chartRingkasan = [
+    { label: 'Pembeli', value: num(data.jumlah_pembeli, data.total_pembeli, data.pembeli) },
+    { label: 'Produk', value: num(data.jumlah_produk, data.total_produk, data.produk) },
+    { label: 'Transaksi', value: num(data.jumlah_transaksi, data.total_transaksi, data.transaksi) },
+    { label: 'Terjual', value: num(data.produk_terjual, data.terjual) },
+    { label: 'Aktif', value: num(data.pesanan_aktif, data.aktif) },
+    { label: 'Belum bayar', value: num(data.belum_dibayar, data.belum) },
+  ].filter((x) => x.value > 0);
+
   const stats = [
     {
       label: 'Pembeli',
@@ -261,13 +292,93 @@ export default function AdminOverviewPage() {
         ))}
       </div>
 
+      
+      <div className="row g-3 mb-4">
+        <div className="col-lg-7">
+          <div className="chart-card">
+            <div className="chart-card__title">Grafik ringkasan toko</div>
+            <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={200} color="#1a2744" />
+          </div>
+        </div>
+        <div className="col-lg-5">
+          <div className="chart-card">
+            <div className="chart-card__title">Status transaksi terbaru</div>
+            <DonutChart data={chartStatus} labelKey="label" valueKey="value" />
+          </div>
+        </div>
+      </div>
+
       <div className="revenue-banner mt-4">
         <div>
-          <div className="revenue-banner__label">Pendapatan (sudah dibayar)</div>
-          <div className="revenue-banner__value">{formatRupiah(num(data.total_pendapatan))}</div>
-          <div className="revenue-banner__hint">Akumulasi pesanan berstatus pembayaran Dibayar</div>
+          
+      <div className="row g-3 mb-4">
+        <div className="col-lg-7">
+          <div className="chart-card">
+            <div className="chart-card__title">Grafik ringkasan toko</div>
+            <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={200} color="#1a2744" />
+          </div>
         </div>
-        <div className="revenue-banner__icon"><i className="bi bi-cash-stack" /></div>
+        <div className="col-lg-5">
+          <div className="chart-card">
+            <div className="chart-card__title">Status transaksi terbaru</div>
+            <DonutChart data={chartStatus} labelKey="label" valueKey="value" />
+          </div>
+        </div>
+      </div>
+
+      <div className="revenue-banner__label">Pendapatan (sudah dibayar)</div>
+          
+      <div className="row g-3 mb-4">
+        <div className="col-lg-7">
+          <div className="chart-card">
+            <div className="chart-card__title">Grafik ringkasan toko</div>
+            <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={200} color="#1a2744" />
+          </div>
+        </div>
+        <div className="col-lg-5">
+          <div className="chart-card">
+            <div className="chart-card__title">Status transaksi terbaru</div>
+            <DonutChart data={chartStatus} labelKey="label" valueKey="value" />
+          </div>
+        </div>
+      </div>
+
+      <div className="revenue-banner__value">{formatRupiah(num(data.total_pendapatan))}</div>
+          
+      <div className="row g-3 mb-4">
+        <div className="col-lg-7">
+          <div className="chart-card">
+            <div className="chart-card__title">Grafik ringkasan toko</div>
+            <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={200} color="#1a2744" />
+          </div>
+        </div>
+        <div className="col-lg-5">
+          <div className="chart-card">
+            <div className="chart-card__title">Status transaksi terbaru</div>
+            <DonutChart data={chartStatus} labelKey="label" valueKey="value" />
+          </div>
+        </div>
+      </div>
+
+      <div className="revenue-banner__hint">Akumulasi pesanan berstatus pembayaran Dibayar</div>
+        </div>
+        
+      <div className="row g-3 mb-4">
+        <div className="col-lg-7">
+          <div className="chart-card">
+            <div className="chart-card__title">Grafik ringkasan toko</div>
+            <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={200} color="#1a2744" />
+          </div>
+        </div>
+        <div className="col-lg-5">
+          <div className="chart-card">
+            <div className="chart-card__title">Status transaksi terbaru</div>
+            <DonutChart data={chartStatus} labelKey="label" valueKey="value" />
+          </div>
+        </div>
+      </div>
+
+      <div className="revenue-banner__icon"><i className="bi bi-cash-stack" /></div>
       </div>
 
       <div className="panel mt-4">

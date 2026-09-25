@@ -9,11 +9,11 @@ import {
   labelMetodeBayar,
   labelPengiriman,
   mediaUrl,
+  printStruk,
 } from '../../utils';
 import SafeImg from '../../components/SafeImg';
-import { METODE_BAYAR, BANK_OPTIONS } from '../../constants';
+import { METODE_BAYAR, BANK_OPTIONS, SITE } from '../../constants';
 import { useCart } from '../../context/CartContext';
-import { labelMetodeBayar as labelBayar } from '../../utils';
 
 export default function PembeliTransaksiPage() {
   const { rows: pesanan, loading, error, reload } = usePembeliList(pembeliApi.getPembelian);
@@ -467,6 +467,18 @@ export default function PembeliTransaksiPage() {
                       </span>
                       <span className="badge-soft muted">{labelMetodeBayar(p.metode_pembayaran)}</span>
                       <span className="badge-soft muted">{labelPengiriman(p.pengiriman)}</span>
+                    </div>
+
+                    <div className="d-flex flex-wrap gap-2 mt-3">
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-brand"
+                        onClick={() => printStruk(p, SITE)}
+                        title="Cetak struk"
+                      >
+                        <i className="bi bi-printer me-1" />
+                        Cetak struk
+                      </button>
                     </div>
 
                     <div className="row g-1 small text-secondary mt-2">
