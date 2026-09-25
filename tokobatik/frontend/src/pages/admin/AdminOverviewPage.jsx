@@ -107,6 +107,30 @@ function computeFromLists({ produk, pembeli, artikel, pembelian }) {
   };
 }
 
+function isSameLocalDay(dateLike, ref = new Date()) {
+  if (!dateLike) return false;
+  const d = new Date(dateLike);
+  if (Number.isNaN(d.getTime())) return false;
+  return (
+    d.getFullYear() === ref.getFullYear() &&
+    d.getMonth() === ref.getMonth() &&
+    d.getDate() === ref.getDate()
+  );
+}
+
+function formatHariIniLabel(ref = new Date()) {
+  try {
+    return ref.toLocaleDateString('id-ID', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
+  } catch {
+    return ref.toISOString().slice(0, 10);
+  }
+}
+
 function hasAnyStat(data) {
   if (!data) return false;
   return (
@@ -116,6 +140,12 @@ function hasAnyStat(data) {
 }
 
 async function loadDashboard() {
+  // Ambil daftar pembelian penuh untuk diagram "hari ini"
+  const pembelianFull = await adminApi
+    .getPembelian()
+    .then((r) => (Array.isArray(r.data) ? r.data : asArray(r.data) || asArray(r.raw) || []))
+    .catch(() => []);
+
   // 1) coba endpoint stats
   try {
     const r = await adminApi.getStats();
@@ -126,20 +156,30 @@ async function loadDashboard() {
           ? r.raw
           : null;
     const flat = flattenStats(source);
-    if (flat && hasAnyStat(flat)) return flat;
+    if (flat && hasAnyStat(flat)) {
+      return {
+        ...flat,
+        semua_transaksi: pembelianFull.length ? pembelianFull : flat.transaksi_terbaru || [],
+      };
+    }
   } catch {
     // lanjut fallback
   }
 
-  // 2) fallback: aggregate dari endpoint list yang biasanya sudah jalan
-  const [produk, pembeli, artikel, pembelian] = await Promise.all([
+  // 2) fallback: aggregate dari endpoint list
+  const [produk, pembeli, artikel] = await Promise.all([
     adminApi.getProduk().then((r) => r.data).catch(() => []),
     adminApi.getPembeli().then((r) => r.data).catch(() => []),
     adminApi.getArtikel().then((r) => r.data).catch(() => []),
-    adminApi.getPembelian().then((r) => r.data).catch(() => []),
   ]);
 
-  return computeFromLists({ produk, pembeli, artikel, pembelian });
+  const agg = computeFromLists({
+    produk,
+    pembeli,
+    artikel,
+    pembelian: pembelianFull,
+  });
+  return { ...agg, semua_transaksi: pembelianFull };
 }
 
 export default function AdminOverviewPage() {
@@ -180,21 +220,27 @@ export default function AdminOverviewPage() {
   if (error) return <div className="alert alert-danger">{error}</div>;
   if (!data) return null;
 
-  const transaksiList = Array.isArray(data.transaksi_terbaru) ? data.transaksi_terbaru : [];
+  const sekarang = new Date();
+  const labelHariIni = formatHariIniLabel(sekarang);
+
+  // Sumber: semua transaksi jika ada, fallback transaksi_terbaru
+  const semua =
+    (Array.isArray(data.semua_transaksi) && data.semua_transaksi.length
+      ? data.semua_transaksi
+      : null) ||
+    (Array.isArray(data.transaksi_terbaru) ? data.transaksi_terbaru : []);
+
+  // Hanya transaksi yang tanggalnya = hari ini (zona waktu perangkat admin)
+  const transaksiHariIni = semua.filter((r) =>
+    isSameLocalDay(r.created_at || r.tanggal, sekarang)
+  );
 
   const chartStatus = (() => {
     const map = {};
-    transaksiList.forEach((r) => {
+    transaksiHariIni.forEach((r) => {
       const st = r.status || 'Lainnya';
       map[st] = (map[st] || 0) + 1;
     });
-    if (!Object.keys(map).length) {
-      return [
-        { label: 'Pembeli', value: num(data.jumlah_pembeli, data.total_pembeli) },
-        { label: 'Produk', value: num(data.jumlah_produk, data.total_produk) },
-        { label: 'Transaksi', value: num(data.jumlah_transaksi, data.total_transaksi) },
-      ].filter((x) => x.value > 0);
-    }
     return Object.entries(map).map(([label, value]) => ({ label, value }));
   })();
 
@@ -298,11 +344,23 @@ export default function AdminOverviewPage() {
         </div>
         <div className="col-lg-5">
           <div className="chart-card">
-            <div className="chart-card__title">Diagram batang — status transaksi terbaru</div>
+            <div className="chart-card__title">Diagram batang — status transaksi hari ini</div>
             <p className="small text-muted mb-2" style={{ marginTop: '-0.35rem' }}>
-              Hanya dari {transaksiList.length || transaksi.length || 0} transaksi terbaru (bukan semua pesanan)
+              {labelHariIni}
+              {' · '}
+              {transaksiHariIni.length
+                ? `${transaksiHariIni.length} transaksi hari ini`
+                : 'Belum ada transaksi hari ini'}
             </p>
-            <BarChart data={chartStatus} labelKey="label" valueKey="value" height={220} />
+            {transaksiHariIni.length ? (
+              <BarChart data={chartStatus} labelKey="label" valueKey="value" height={220} />
+            ) : (
+              <p className="small text-muted text-center py-4 mb-0">
+                Belum ada transaksi pada tanggal hari ini.
+                <br />
+                Besok diagram akan menampilkan transaksi tanggal besok.
+              </p>
+            )}
           </div>
         </div>
       </div>
