@@ -310,7 +310,7 @@ export default function PembeliTransaksiPage() {
               >
                 {METODE_BAYAR.map((m) => (
                   <option key={m} value={m}>
-                    {labelBayar(m)}
+                    {labelMetodeBayar(m)}
                   </option>
                 ))}
               </select>
