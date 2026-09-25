@@ -334,7 +334,7 @@ export default function AdminLaporanPage() {
           <div className="row g-3 mb-3 no-print">
             <div className="col-lg-7">
               <div className="chart-card">
-                <div className="chart-card__title">Diagram batang — penjualan per kategori</div>
+                <div className="chart-card__title">Diagram batang — penjualan per kategori (sesuai filter)</div>
                 <BarChart
                   data={chartByKategori}
                   labelKey="label"
@@ -346,7 +346,7 @@ export default function AdminLaporanPage() {
             </div>
             <div className="col-lg-5">
               <div className="chart-card">
-                <div className="chart-card__title">Diagram batang — status pesanan</div>
+                <div className="chart-card__title">Diagram batang — status (sesuai filter laporan)</div>
                 <BarChart
                   data={chartByStatus}
                   labelKey="label"

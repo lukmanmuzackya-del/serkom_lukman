@@ -292,14 +292,17 @@ export default function AdminOverviewPage() {
       <div className="row g-3 mb-4 mt-1">
         <div className="col-lg-7">
           <div className="chart-card">
-            <div className="chart-card__title">Diagram batang — ringkasan toko</div>
+            <div className="chart-card__title">Diagram batang — ringkasan toko (keseluruhan)</div>
             <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={240} color="#1a2744" />
           </div>
         </div>
         <div className="col-lg-5">
           <div className="chart-card">
-            <div className="chart-card__title">Diagram batang — status transaksi</div>
-            <BarChart data={chartStatus} labelKey="label" valueKey="value" height={240} />
+            <div className="chart-card__title">Diagram batang — status transaksi terbaru</div>
+            <p className="small text-muted mb-2" style={{ marginTop: '-0.35rem' }}>
+              Hanya dari {transaksiList.length || transaksi.length || 0} transaksi terbaru (bukan semua pesanan)
+            </p>
+            <BarChart data={chartStatus} labelKey="label" valueKey="value" height={220} />
           </div>
         </div>
       </div>
