@@ -472,9 +472,9 @@ export default function PembeliTransaksiPage() {
                     <div className="d-flex flex-wrap gap-2 mt-3">
                       <button
                         type="button"
-                        className="btn btn-sm btn-outline-brand"
+                        className="btn btn-sm btn-brand"
                         onClick={() => printStruk(p, SITE)}
-                        title="Cetak struk"
+                        title="Cetak struk transaksi"
                       >
                         <i className="bi bi-printer me-1" />
                         Cetak struk

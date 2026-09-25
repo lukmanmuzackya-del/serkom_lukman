@@ -3,7 +3,7 @@
  * Coba GET /api/admin/stats dulu; jika gagal / kosong, hitung dari list produk/pembeli/artikel/pembelian.
  */
 import { useEffect, useState } from 'react';
-import { BarChart, DonutChart } from '../../components/SimpleCharts';
+import { BarChart } from '../../components/SimpleCharts';
 import { Link } from 'react-router-dom';
 import { adminApi } from '../../api';
 import { useAdminGuard } from '../../hooks';
@@ -292,14 +292,14 @@ export default function AdminOverviewPage() {
       <div className="row g-3 mb-4 mt-1">
         <div className="col-lg-7">
           <div className="chart-card">
-            <div className="chart-card__title">Grafik ringkasan toko</div>
-            <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={200} color="#1a2744" />
+            <div className="chart-card__title">Diagram batang — ringkasan toko</div>
+            <BarChart data={chartRingkasan} labelKey="label" valueKey="value" height={240} color="#1a2744" />
           </div>
         </div>
         <div className="col-lg-5">
           <div className="chart-card">
-            <div className="chart-card__title">Status transaksi terbaru</div>
-            <DonutChart data={chartStatus} labelKey="label" valueKey="value" />
+            <div className="chart-card__title">Diagram batang — status transaksi</div>
+            <BarChart data={chartStatus} labelKey="label" valueKey="value" height={240} />
           </div>
         </div>
       </div>

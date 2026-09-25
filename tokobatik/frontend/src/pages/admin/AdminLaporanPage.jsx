@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { BarChart, DonutChart } from '../../components/SimpleCharts';
+import { BarChart } from '../../components/SimpleCharts';
 import { adminApi } from '../../api';
 import { useAdminGuard } from '../../hooks';
 import LoadingBlock from '../../components/admin/LoadingBlock';
@@ -330,27 +330,28 @@ export default function AdminLaporanPage() {
           </div>
 
           
-          {/* GRAFIK */}
+          {/* DIAGRAM BATANG PENJUALAN */}
           <div className="row g-3 mb-3 no-print">
             <div className="col-lg-7">
               <div className="chart-card">
-                <div className="chart-card__title">Grafik penjualan per kategori</div>
+                <div className="chart-card__title">Diagram batang — penjualan per kategori</div>
                 <BarChart
                   data={chartByKategori}
                   labelKey="label"
                   valueKey="value"
                   formatValue={(v) => formatRupiah(v)}
-                  height={200}
+                  height={240}
                 />
               </div>
             </div>
             <div className="col-lg-5">
               <div className="chart-card">
-                <div className="chart-card__title">Komposisi status pesanan</div>
-                <DonutChart
+                <div className="chart-card__title">Diagram batang — status pesanan</div>
+                <BarChart
                   data={chartByStatus}
                   labelKey="label"
                   valueKey="value"
+                  height={240}
                 />
               </div>
             </div>
